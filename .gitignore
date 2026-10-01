@@ -1,4 +1,27 @@
-goodvibesroofingtx.com/
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
 .DS_Store
 Thumbs.db
 *.log
+goodvibesroofingtx.com/
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
