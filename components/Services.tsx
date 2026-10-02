@@ -333,8 +333,8 @@ export const Services: React.FC = () => {
               <div className="svc-photo">
                 <img
                   loading="lazy"
-                  alt="Kitchen renovations and custom cupboards"
-                  src="/images/ig-post-2.jpg"
+                  alt="Custom kitchen renovations, built-in cupboards and cabinetry"
+                  src="/images/svc-kitchen-cupboards.jpg"
                 />
               </div>
               <div className="svc-body">
