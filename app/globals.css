@@ -811,12 +811,7 @@ section {
 }
 
 .jv-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(9, 18, 33, 0.65) 0%, rgba(9, 18, 33, 0.15) 50%, rgba(9, 18, 33, 0.3) 100%);
-  pointer-events: none;
-  z-index: 1;
+  display: none;
 }
 
 .jv-badge {
