@@ -10,8 +10,27 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playerRef = useRef<any>(null);
+  const isInViewRef = useRef<boolean>(false);
+  const userMutedExplicitlyRef = useRef<boolean>(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
+
+  // Helper to send commands to YouTube player
+  const sendCommand = (func: string, args: any[] = []) => {
+    if (playerRef.current && typeof playerRef.current[func] === "function") {
+      try {
+        playerRef.current[func](...args);
+      } catch {}
+    }
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      try {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: "command", func, args }),
+          "*"
+        );
+      } catch {}
+    }
+  };
 
   useEffect(() => {
     // Load YouTube IFrame API
@@ -34,14 +53,28 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
             rel: 0,
             modestbranding: 1,
             playsinline: 1,
-            mute: 1,
+            mute: 0,
             enablejsapi: 1,
           },
           events: {
             onReady: (event: any) => {
               try {
-                event.target.mute();
+                event.target.unMute();
+                event.target.setVolume(100);
               } catch {}
+              if (containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                const inView =
+                  rect.top < window.innerHeight * 0.75 &&
+                  rect.bottom > window.innerHeight * 0.25;
+                if (inView) {
+                  isInViewRef.current = true;
+                  try {
+                    event.target.playVideo();
+                    setIsPlaying(true);
+                  } catch {}
+                }
+              }
             },
             onStateChange: (event: any) => {
               // 1 = playing, 2 = paused
@@ -66,38 +99,30 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
       };
     }
 
-    // Resilient command sender
-    const sendCommand = (func: string, args: any = "") => {
-      if (playerRef.current && typeof playerRef.current[func] === "function") {
-        try {
-          playerRef.current[func](args);
-        } catch {}
-      }
-      if (iframeRef.current && iframeRef.current.contentWindow) {
-        try {
-          iframeRef.current.contentWindow.postMessage(
-            JSON.stringify({ event: "command", func, args }),
-            "*"
-          );
-        } catch {}
-      }
-    };
-
-    // IntersectionObserver: Auto-play when scrolled in, Auto-pause when scrolled away
+    // IntersectionObserver: Auto-play with sound when scrolled in, Auto-pause when scrolled away
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            isInViewRef.current = true;
+            // Play video with audio automatically
+            if (!userMutedExplicitlyRef.current) {
+              sendCommand("unMute");
+              sendCommand("setVolume", [100]);
+              setIsMuted(false);
+            }
             sendCommand("playVideo");
             setIsPlaying(true);
           } else {
+            // Pause video automatically when scrolled away / more down
+            isInViewRef.current = false;
             sendCommand("pauseVideo");
             setIsPlaying(false);
           }
         });
       },
       {
-        threshold: 0.35,
+        threshold: 0.3,
       }
     );
 
@@ -105,30 +130,44 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
       observer.observe(containerRef.current);
     }
 
+    // Scroll & touch listener to guarantee sound playback when user reaches the video
+    const unlockAudioOnScrollOrInteraction = () => {
+      if (isInViewRef.current && !userMutedExplicitlyRef.current) {
+        sendCommand("unMute");
+        sendCommand("setVolume", [100]);
+        setIsMuted(false);
+      }
+    };
+
+    window.addEventListener("scroll", unlockAudioOnScrollOrInteraction, { passive: true });
+    window.addEventListener("wheel", unlockAudioOnScrollOrInteraction, { passive: true });
+    window.addEventListener("touchstart", unlockAudioOnScrollOrInteraction, { passive: true });
+    window.addEventListener("pointerdown", unlockAudioOnScrollOrInteraction, { passive: true });
+    window.addEventListener("keydown", unlockAudioOnScrollOrInteraction, { passive: true });
+
     return () => {
       if (containerRef.current) {
         observer.unobserve(containerRef.current);
       }
       observer.disconnect();
+      window.removeEventListener("scroll", unlockAudioOnScrollOrInteraction);
+      window.removeEventListener("wheel", unlockAudioOnScrollOrInteraction);
+      window.removeEventListener("touchstart", unlockAudioOnScrollOrInteraction);
+      window.removeEventListener("pointerdown", unlockAudioOnScrollOrInteraction);
+      window.removeEventListener("keydown", unlockAudioOnScrollOrInteraction);
     };
   }, []);
 
   const toggleSound = () => {
-    if (playerRef.current) {
-      if (isMuted) {
-        if (typeof playerRef.current.unMute === "function") playerRef.current.unMute();
-        setIsMuted(false);
-      } else {
-        if (typeof playerRef.current.mute === "function") playerRef.current.mute();
-        setIsMuted(true);
-      }
-    } else if (iframeRef.current && iframeRef.current.contentWindow) {
-      const func = isMuted ? "unMute" : "mute";
-      iframeRef.current.contentWindow.postMessage(
-        JSON.stringify({ event: "command", func, args: "" }),
-        "*"
-      );
-      setIsMuted(!isMuted);
+    if (isMuted) {
+      userMutedExplicitlyRef.current = false;
+      sendCommand("unMute");
+      sendCommand("setVolume", [100]);
+      setIsMuted(false);
+    } else {
+      userMutedExplicitlyRef.current = true;
+      sendCommand("mute");
+      setIsMuted(true);
     }
   };
 
@@ -136,7 +175,7 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
     <section className="jordan" id="about">
       <div className="wrap jordan-grid">
         <div className="jv-col">
-          {/* YouTube Video Container with Scroll-triggered Autoplay/Pause */}
+          {/* YouTube Video Container with Scroll-triggered Autoplay/Pause & Automatic Sound */}
           <div
             ref={containerRef}
             className="jv-frame"
@@ -153,7 +192,7 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
             <iframe
               ref={iframeRef}
               id="gdm-yt-player"
-              src="https://www.youtube.com/embed/vasvYXUHx04?enablejsapi=1&autoplay=0&mute=1&playsinline=1&rel=0&modestbranding=1"
+              src="https://www.youtube.com/embed/vasvYXUHx04?enablejsapi=1&autoplay=0&mute=0&playsinline=1&rel=0&modestbranding=1"
               title="GDM Construction &amp; Roofing Owner Introduction"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
@@ -168,55 +207,19 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
               }}
             />
 
-            {/* Floating Live Status & Audio Controls */}
+            {/* Subtle Floating Sound Control in Top-Right Corner */}
             <div
               style={{
                 position: "absolute",
                 top: "12px",
-                left: "12px",
                 right: "12px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                pointerEvents: "none",
                 zIndex: 10,
               }}
             >
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  background: "rgba(15, 23, 42, 0.82)",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
-                  padding: "6px 12px",
-                  borderRadius: "999px",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  color: "#ffffff",
-                  border: "1px solid rgba(255, 255, 255, 0.15)",
-                  boxShadow: "0 4px 14px rgba(0,0,0,0.35)",
-                }}
-              >
-                <span
-                  style={{
-                    width: "8px",
-                    height: "8px",
-                    borderRadius: "50%",
-                    backgroundColor: isPlaying ? "#22c55e" : "#f59e0b",
-                    boxShadow: isPlaying ? "0 0 10px #22c55e" : "none",
-                    animation: isPlaying ? "pulse-dot 2s infinite ease-in-out" : "none",
-                  }}
-                />
-                {isPlaying ? "Auto-Playing · Owner Intro" : "Paused · Scroll to Play"}
-              </span>
-
               <button
                 type="button"
                 onClick={toggleSound}
                 style={{
-                  pointerEvents: "auto",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "6px",
@@ -242,7 +245,7 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
                       <path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6" />
                       <path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23" />
                     </svg>
-                    <span>Tap for Sound</span>
+                    <span>Muted · Tap to Sound</span>
                   </>
                 ) : (
                   <>
