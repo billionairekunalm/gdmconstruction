@@ -789,7 +789,7 @@ section {
 .jv-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   border-radius: 22px;
   overflow: hidden;
   background: var(--dark);

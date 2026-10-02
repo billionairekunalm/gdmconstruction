@@ -183,7 +183,7 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
               borderRadius: "20px",
               overflow: "hidden",
               position: "relative",
-              aspectRatio: "16 / 9",
+              aspectRatio: "4 / 3",
               background: "#0a1120",
               boxShadow: "0 14px 40px rgba(0,0,0,0.25)",
               border: "1.5px solid rgba(47, 127, 224, 0.25)",
