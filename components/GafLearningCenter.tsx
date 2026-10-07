@@ -2,443 +2,373 @@
 
 import React, { useState } from "react";
 
+interface GafLearningCenterProps {
+  onOpenBooking?: () => void;
+}
+
 type TabKey = "metal" | "tiles" | "ceilings" | "waterproofing";
 
-export const GafLearningCenter: React.FC = () => {
+interface TechnicalSystem {
+  id: TabKey;
+  tabLabel: string;
+  tabIcon: React.ReactNode;
+  title: string;
+  subtitle: string;
+  specs: { label: string; value: string; detail: string }[];
+  layers: { step: string; title: string; desc: string }[];
+  benefitHeadline: string;
+  benefitPoints: string[];
+  preventHeadline: string;
+  preventPoints: string[];
+}
+
+export const GafLearningCenter: React.FC<GafLearningCenterProps> = ({ onOpenBooking }) => {
   const [activeTab, setActiveTab] = useState<TabKey>("metal");
 
-  const tabTitles: Record<TabKey, string> = {
-    metal: "IBR & Chromadek Metal Sheeting Specifications",
-    tiles: "Concrete & Clay Tiled Roof Systems (Marley)",
-    ceilings: "Flush Ceilings & Authentic Rhinolite Skimming",
-    waterproofing: "Waterproofing & Protective Roof Coatings",
+  const SYSTEMS: Record<TabKey, TechnicalSystem> = {
+    metal: {
+      id: "metal",
+      tabLabel: "IBR & Metal Sheeting",
+      tabIcon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      ),
+      title: "IBR & Chromadek® Metal Sheeting Specifications",
+      subtitle: "Engineered for high structural load-bearing capacity and rapid water runoff on Highveld roofs.",
+      specs: [
+        { label: "Minimum Pitch", value: "5° – 15°", detail: "Deep-flute runoff profile" },
+        { label: "Steel Gauge", value: "0.50 – 0.58mm", detail: "Heavy-spec structural steel" },
+        { label: "Fasteners", value: "Class 4 Screws", detail: "EPDM neoprene leak seal" },
+        { label: "Finish Coating", value: "Chromadek®", detail: "Factory baked-enamel UV shield" }
+      ],
+      layers: [
+        {
+          step: "01",
+          title: "Truss Spacing & Purlin Alignment",
+          desc: "Engineered timber or light-steel purlins leveled to prevent sheet flexing under hail."
+        },
+        {
+          step: "02",
+          title: "Thermal Insulation & Sisalation Barrier",
+          desc: "Radiant heat foil barrier installed beneath sheeting to drop indoor temperatures by up to 6°C."
+        },
+        {
+          step: "03",
+          title: "Precision Fastening & Anti-Capillary Lapping",
+          desc: "Sheets overlapped with anti-capillary side-grooves and fastened with weather-sealed hex heads."
+        }
+      ],
+      benefitHeadline: "Why This Matters For Your Roof:",
+      benefitPoints: [
+        "Eliminates standing water on low-slope buildings",
+        "Resistant to high-velocity Highveld hail impact",
+        "Zero peeling, flaking, or rapid UV chalking"
+      ],
+      preventHeadline: "What GDM Construction Prevents:",
+      preventPoints: [
+        "No overtightened screws cutting rubber seals",
+        "No undersized steel sheets bending in storm winds"
+      ]
+    },
+    tiles: {
+      id: "tiles",
+      tabLabel: "Marley Tiled Roofs",
+      tabIcon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M3 12.5 12 4l9 8.5" />
+          <path d="M6.5 9.7V19h11V9.7" />
+        </svg>
+      ),
+      title: "Marley® Concrete & Clay Tile Engineering",
+      subtitle: "Traditional Highveld durability coupled with modern interlocking wind-and-rain defense.",
+      specs: [
+        { label: "Minimum Pitch", value: "17.5° – 26°", detail: "Depending on tile profile" },
+        { label: "Headlap Spec", value: "75mm – 100mm", detail: "Prevents wind-driven rain creep" },
+        { label: "Under-Tile Barrier", value: "RadenShield", detail: "Thermal insulation & vapour seal" },
+        { label: "Ridge Fixing", value: "3:1 Mortar Bed", detail: "Reinforced cement hip bedding" }
+      ],
+      layers: [
+        {
+          step: "01",
+          title: "RadenShield Thermal Membrane Laying",
+          desc: "Draped tautly over roof trusses before battening to catch wind-blown moisture and insulate."
+        },
+        {
+          step: "02",
+          title: "Treated Timber Batten Spacing",
+          desc: "SABS-treated 38x38mm battens calibrated to exact gauge for uniform tile weight distribution."
+        },
+        {
+          step: "03",
+          title: "Interlocking Lay & Mechanical Clamping",
+          desc: "Perimeter and ridge tiles mechanically secured to withstand severe Gauteng storm updrafts."
+        }
+      ],
+      benefitHeadline: "Why This Matters For Your Roof:",
+      benefitPoints: [
+        "Unrivalled acoustic insulation against storm downpours",
+        "Superior Highveld thermal stability year-round",
+        "30+ year lifespan with authentic Marley tile guarantee"
+      ],
+      preventHeadline: "What GDM Construction Prevents:",
+      preventPoints: [
+        "No missing undertile plastic allowing ceiling damp",
+        "No cracked, un-reinforced ridge mortar blowing off"
+      ]
+    },
+    ceilings: {
+      id: "ceilings",
+      tabLabel: "Ceilings & Rhinolite",
+      tabIcon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <path d="M3 9h18M9 21V9" />
+        </svg>
+      ),
+      title: "Flush Plastered Ceilings & Rhinolite Skimming",
+      subtitle: "Glass-smooth, seamless interior finishes with zero board sagging or joint cracking.",
+      specs: [
+        { label: "Plasterboard", value: "9.5mm Gyproc", detail: "RhinoBoard gypsum panels" },
+        { label: "Skim Finish", value: "3mm Rhinolite", detail: "Hand-trowelled monolithic coat" },
+        { label: "Brandering", value: "38x38mm SABS", detail: "Galvanized screw fixed @ 400mm" },
+        { label: "Joint Tape", value: "Fibreglass Scrim", detail: "Prevents hairline thermal cracks" }
+      ],
+      layers: [
+        {
+          step: "01",
+          title: "Sub-Framing & Brandering Alignment",
+          desc: "Laser-leveled brandering securely anchored to trusses to create a dead-flat ceiling plane."
+        },
+        {
+          step: "02",
+          title: "Plasterboard Installation & Scrim Taping",
+          desc: "Boards installed with staggered joints, drywall-screwed and reinforced with fibreglass scrim."
+        },
+        {
+          step: "03",
+          title: "Two-Coat Rhinolite Skim Trowelling",
+          desc: "Applied wet-on-wet by master plasterers and water-polished to an impeccable mirror-smooth finish."
+        }
+      ],
+      benefitHeadline: "Why This Matters For Your Home:",
+      benefitPoints: [
+        "Eliminates unsightly visible board lines completely",
+        "Provides a pristine architectural surface ready for paint",
+        "Enhances living room acoustic warmth and thermal comfort"
+      ],
+      preventHeadline: "What GDM Construction Prevents:",
+      preventPoints: [
+        "No sagging ceiling boards from spaced-out brandering",
+        "No bubbling, peeling or rough plaster patches"
+      ]
+    },
+    waterproofing: {
+      id: "waterproofing",
+      tabLabel: "Waterproofing Systems",
+      tabIcon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 2 4 5.5v6c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5v-6L12 2z" />
+          <path d="m9 12 2 2 4-4.5" />
+        </svg>
+      ),
+      title: "Multi-Tier Waterproofing & Membrane Fusion",
+      subtitle: "Heat-welded 4mm torch-on membranes and fibre-reinforced elastomeric barrier systems.",
+      specs: [
+        { label: "Torch-On Spec", value: "4mm Heat-Fused", detail: "Polyester-reinforced bitumen" },
+        { label: "Parapet Banding", value: "Poly-Fibre Mesh", detail: "Triple-layer acrylic membrane" },
+        { label: "Primer Coat", value: "Bitumen Primer", detail: "Deep-penetration substrate bond" },
+        { label: "UV Topcoat", value: "Reflective Silver", detail: "Prevents thermal bitumen cracking" }
+      ],
+      layers: [
+        {
+          step: "01",
+          title: "Substrate Cleaning & Primer Application",
+          desc: "Concrete slabs and brick parapets wire-brushed, cleared of debris, and coated with bonding primer."
+        },
+        {
+          step: "02",
+          title: "Torch-On Membrane Fusion Welding",
+          desc: "Propane gas torch flame-melts the bitumen underside, creating a monolithic weld to the slab."
+        },
+        {
+          step: "03",
+          title: "Parapet Lap Dressing & Silver UV Coat",
+          desc: "Counter-flashed against parapet upstands and coated with protective UV-reflecting liquid."
+        }
+      ],
+      benefitHeadline: "Why This Matters For Your Property:",
+      benefitPoints: [
+        "100% impervious to ponding rainwater on flat roofs",
+        "Protects concrete reinforcement rebar from corrosion",
+        "Stops parapet wall capillary moisture from rotting interior paint"
+      ],
+      preventHeadline: "What GDM Construction Prevents:",
+      preventPoints: [
+        "No un-torched cold laps peeling open during freezes",
+        "No single-layer painting peeling off brick parapets"
+      ]
+    }
   };
 
+  const current = SYSTEMS[activeTab];
+
   return (
-    <section className="gaf" id="materials">
-      <div className="wrap">
-        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 40px" }}>
-          <div className="eyebrow" style={{ justifyContent: "center" }}>
-            Technical Standards &amp; Materials
+    <section className="tech-section" id="materials">
+      <div className="wrap tech-container">
+        {/* 1. Section Header */}
+        <div className="tech-header">
+          <div className="tech-eyebrow">
+            <span className="tech-eyebrow-dot" />
+            <span>SANS 10400 Technical Standards &amp; Architecture</span>
           </div>
-          <h2>Understand the systems that protect your property.</h2>
-          <p className="lede" style={{ margin: "14px auto 0" }}>
-            We believe in complete transparency. Explore how GDM installs, waterproofs, and builds according to strict South African building guidelines — no shortcuts, just lasting quality.
+
+          <h2 className="tech-title">
+            Engineering Precision.
+            <span className="tech-title-accent"> Transparent Specifications.</span>
+          </h2>
+
+          <p className="tech-subtitle">
+            We believe property owners deserve complete technical clarity. Explore how GDM installs, waterproofs, and builds according to strict South African building codes — with zero shortcuts.
           </p>
         </div>
 
-        <div className="gaf-tabs" role="tablist">
-          <button
-            className={`gaf-tab ${activeTab === "metal" ? "active" : ""}`}
-            onClick={() => setActiveTab("metal")}
-            role="tab"
-            aria-selected={activeTab === "metal"}
-            type="button"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 6h18M3 12h18M3 18h18" />
-            </svg>
-            <span>Metal Sheeting &amp; IBR</span>
-          </button>
-
-          <button
-            className={`gaf-tab ${activeTab === "tiles" ? "active" : ""}`}
-            onClick={() => setActiveTab("tiles")}
-            role="tab"
-            aria-selected={activeTab === "tiles"}
-            type="button"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 12.5 12 4l9 8.5" />
-              <path d="M6.5 9.7V19h11V9.7" />
-            </svg>
-            <span>Tile Roof Systems</span>
-          </button>
-
-          <button
-            className={`gaf-tab ${activeTab === "ceilings" ? "active" : ""}`}
-            onClick={() => setActiveTab("ceilings")}
-            role="tab"
-            aria-selected={activeTab === "ceilings"}
-            type="button"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <path d="M3 9h18M9 21V9" />
-            </svg>
-            <span>Ceilings &amp; Rhinolite</span>
-          </button>
-
-          <button
-            className={`gaf-tab ${activeTab === "waterproofing" ? "active" : ""}`}
-            onClick={() => setActiveTab("waterproofing")}
-            role="tab"
-            aria-selected={activeTab === "waterproofing"}
-            type="button"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 2 4 5.5v6c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5v-6L12 2z" />
-              <path d="m9 12 2 2 4-4.5" />
-            </svg>
-            <span>Waterproofing</span>
-          </button>
+        {/* 2. Interactive Segmented Tabs */}
+        <div className="tech-tabs-bar" role="tablist">
+          {(Object.keys(SYSTEMS) as TabKey[]).map((key) => {
+            const sys = SYSTEMS[key];
+            const isActive = activeTab === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                className={`tech-tab-btn ${isActive ? "active" : ""}`}
+                onClick={() => setActiveTab(key)}
+                role="tab"
+                aria-selected={isActive}
+              >
+                <span className="tech-tab-icon">{sys.tabIcon}</span>
+                <span className="tech-tab-label">{sys.tabLabel}</span>
+              </button>
+            );
+          })}
         </div>
 
-        <div className="gaf-panel">
-          <div className="gaf-caption">{tabTitles[activeTab]}</div>
-          <div className="gaf-interactive-view">
-            {activeTab === "metal" && (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-                  gap: "20px",
-                  marginTop: "10px",
-                }}
+        {/* 3. High-Precision Bento Breakdown */}
+        <div className="tech-bento-grid">
+          {/* Card A: Technical Parameters Matrix */}
+          <div className="tech-card tech-card-specs">
+            <div className="tech-card-header">
+              <span className="tech-card-tag">Engineering Matrix</span>
+              <h3 className="tech-card-title">{current.title}</h3>
+              <p className="tech-card-desc">{current.subtitle}</p>
+            </div>
+
+            <div className="tech-specs-matrix">
+              {current.specs.map((item, idx) => (
+                <div key={idx} className="tech-spec-box">
+                  <span className="tech-spec-lbl">{item.label}</span>
+                  <div className="tech-spec-val">{item.value}</div>
+                  <span className="tech-spec-dtl">{item.detail}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="tech-card-action">
+              <button
+                type="button"
+                className="tech-action-quote-btn"
+                onClick={onOpenBooking}
               >
-                <div
-                  style={{
-                    background: "#fff",
-                    border: "1px solid var(--line)",
-                    borderRadius: "14px",
-                    padding: "22px",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      color: "var(--amber-deep)",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    High Strength Commercial &amp; Domestic
-                  </span>
-                  <h4 style={{ fontFamily: "var(--serif)", fontSize: "20px", margin: "6px 0" }}>
-                    IBR Metal Sheeting
-                  </h4>
-                  <p style={{ fontSize: "13.5px", color: "var(--ink-soft)", marginBottom: "14px" }}>
-                    Inverted Box Rib profile offering superior water-discharge capacity for low to medium-pitch roofs.
-                  </p>
-                  <ul
-                    style={{
-                      fontSize: "13px",
-                      color: "var(--ink)",
-                      lineHeight: 1.8,
-                      listStyle: "none",
-                      paddingLeft: 0,
-                    }}
-                  >
-                    <li>✓ High load-bearing structural strength</li>
-                    <li>✓ Broad coverage &amp; fewer end-laps</li>
-                    <li>✓ Sourced from Safintra &amp; Clotan Steel</li>
-                    <li>✓ Weather-resistant neoprene sealing washers</li>
-                  </ul>
-                </div>
-
-                <div
-                  style={{
-                    background: "#fff",
-                    border: "1px solid var(--line)",
-                    borderRadius: "14px",
-                    padding: "22px",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      color: "var(--amber-deep)",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    Architectural Colored Finish
-                  </span>
-                  <h4 style={{ fontFamily: "var(--serif)", fontSize: "20px", margin: "6px 0" }}>
-                    Chromadek® Pre-Painted Steel
-                  </h4>
-                  <p style={{ fontSize: "13.5px", color: "var(--ink-soft)", marginBottom: "14px" }}>
-                    Factory-coated galvanized steel with premium baked-enamel color systems designed for African sunlight.
-                  </p>
-                  <ul
-                    style={{
-                      fontSize: "13px",
-                      color: "var(--ink)",
-                      lineHeight: 1.8,
-                      listStyle: "none",
-                      paddingLeft: 0,
-                    }}
-                  >
-                    <li>✓ Resistant to fading, peeling &amp; chalking</li>
-                    <li>✓ Modern charcoal, slate &amp; color palettes</li>
-                    <li>✓ Outstanding corrosion protection</li>
-                    <li>✓ Perfect for residential re-roofs</li>
-                  </ul>
-                </div>
-
-                <div
-                  style={{
-                    background: "#fff",
-                    border: "1px solid var(--line)",
-                    borderRadius: "14px",
-                    padding: "22px",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      color: "var(--amber-deep)",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    Classic &amp; Timeless
-                  </span>
-                  <h4 style={{ fontFamily: "var(--serif)", fontSize: "20px", margin: "6px 0" }}>
-                    Corrugated Iron Sheeting
-                  </h4>
-                  <p style={{ fontSize: "13.5px", color: "var(--ink-soft)", marginBottom: "14px" }}>
-                    Traditional sinusoidal wave profile suitable for residential roofs, carports, and industrial sheds.
-                  </p>
-                  <ul
-                    style={{
-                      fontSize: "13px",
-                      color: "var(--ink)",
-                      lineHeight: 1.8,
-                      listStyle: "none",
-                      paddingLeft: 0,
-                    }}
-                  >
-                    <li>✓ Cost-effective and durable</li>
-                    <li>✓ High zinc galvanized coating</li>
-                    <li>✓ Rapid installation and replacement</li>
-                    <li>✓ Easy to coat and re-paint</li>
-                  </ul>
-                </div>
-              </div>
-            )}
-
-            {activeTab === "tiles" && (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                  gap: "30px",
-                  alignItems: "center",
-                }}
-              >
-                <div>
-                  <h4 style={{ fontFamily: "var(--serif)", fontSize: "22px", marginBottom: "12px" }}>
-                    Marley Concrete &amp; Clay Tile Installations
-                  </h4>
-                  <p
-                    style={{
-                      fontSize: "14.5px",
-                      color: "var(--ink-soft)",
-                      lineHeight: 1.6,
-                      marginBottom: "14px",
-                    }}
-                  >
-                    GDM installs authentic <strong>Marley</strong> concrete and clay roof tiles. Our team aligns every batten accurately, ensures adequate overlap for Highveld summer downpours, and beds ridge caps in reinforced cement mortar.
-                  </p>
-                  <h4 style={{ fontFamily: "var(--serif)", fontSize: "20px", margin: "18px 0 8px" }}>
-                    Under-Tile Membrane (RadenShield / Undertile Felt)
-                  </h4>
-                  <p
-                    style={{
-                      fontSize: "14.5px",
-                      color: "var(--ink-soft)",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    We never cut corners on undertile plastic membrane or insulation. This barrier prevents wind-driven rain from entering your roof space and significantly lowers thermal heat transfer into your ceilings.
-                  </p>
-                </div>
-
-                <div
-                  style={{
-                    background: "var(--white)",
-                    borderRadius: "16px",
-                    border: "1px solid var(--line)",
-                    padding: "24px",
-                    textAlign: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "44px",
-                      fontWeight: 700,
-                      color: "var(--amber)",
-                      lineHeight: 1,
-                    }}
-                  >
-                    100%
-                  </div>
-                  <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--ink)", marginTop: "6px" }}>
-                    Weather-Sealed Ridge &amp; Valleys
-                  </div>
-                  <hr
-                    style={{
-                      margin: "16px 0",
-                      border: "none",
-                      borderTop: "1px solid var(--line)",
-                    }}
-                  />
-                  <div
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: 700,
-                      color: "var(--amber-deep)",
-                    }}
-                  >
-                    Marley Certified Quality
-                  </div>
-                  <p style={{ fontSize: "13px", color: "var(--ink-mute)", marginTop: "8px" }}>
-                    Concrete double Roman, modern flat, and classic clay profiles for superior curb appeal and decades of storm endurance.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {activeTab === "ceilings" && (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-                  gap: "20px",
-                }}
-              >
-                <div
-                  style={{
-                    background: "#fff",
-                    border: "1px solid var(--line)",
-                    borderRadius: "14px",
-                    padding: "22px",
-                  }}
-                >
-                  <h4 style={{ fontFamily: "var(--serif)", fontSize: "18px", marginBottom: "8px" }}>
-                    Rhinolite Skimming
-                  </h4>
-                  <p style={{ fontSize: "13.5px", color: "var(--ink-soft)", lineHeight: "1.6" }}>
-                    Applied by seasoned plastering tradesmen for a glass-smooth, seamless finish ready for primer and final interior paint. Eliminates visible board joints entirely.
-                  </p>
-                </div>
-
-                <div
-                  style={{
-                    background: "#fff",
-                    border: "1px solid var(--line)",
-                    borderRadius: "14px",
-                    padding: "22px",
-                  }}
-                >
-                  <h4 style={{ fontFamily: "var(--serif)", fontSize: "18px", marginBottom: "8px" }}>
-                    Brand New Ceiling Boards
-                  </h4>
-                  <p style={{ fontSize: "13.5px", color: "var(--ink-soft)", lineHeight: "1.6" }}>
-                    We replace water-logged, sagging or cracked gypsum plasterboards with sturdy galvanized brandering and brand-new Gyproc RhinoBoard.
-                  </p>
-                </div>
-
-                <div
-                  style={{
-                    background: "#fff",
-                    border: "1px solid var(--line)",
-                    borderRadius: "14px",
-                    padding: "22px",
-                  }}
-                >
-                  <h4 style={{ fontFamily: "var(--serif)", fontSize: "18px", marginBottom: "8px" }}>
-                    Cornices &amp; Bulkheads
-                  </h4>
-                  <p style={{ fontSize: "13.5px", color: "var(--ink-soft)", lineHeight: "1.6" }}>
-                    Expert mitering and installation of modern polystyrene or classic plaster cornices, downlight recesses, and decorative living room bulkheads.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {activeTab === "waterproofing" && (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                  gap: "18px",
-                }}
-              >
-                <div
-                  style={{
-                    background: "var(--white)",
-                    padding: "18px",
-                    borderRadius: "12px",
-                    border: "1px solid var(--line)",
-                  }}
-                >
-                  <span style={{ fontWeight: 700, color: "var(--amber)", fontSize: "12px" }}>
-                    SYSTEM 1
-                  </span>
-                  <h4 style={{ fontSize: "16px", margin: "6px 0" }}>Torch-On Bitumen</h4>
-                  <p style={{ fontSize: "13px", color: "var(--ink-soft)" }}>
-                    4mm heat-fused torch-on membrane for flat concrete roofs, balconies, and underground foundations.
-                  </p>
-                </div>
-
-                <div
-                  style={{
-                    background: "var(--white)",
-                    padding: "18px",
-                    borderRadius: "12px",
-                    border: "1px solid var(--line)",
-                  }}
-                >
-                  <span style={{ fontWeight: 700, color: "var(--amber)", fontSize: "12px" }}>
-                    SYSTEM 2
-                  </span>
-                  <h4 style={{ fontSize: "16px", margin: "6px 0" }}>Parapet Wall Sealing</h4>
-                  <p style={{ fontSize: "13px", color: "var(--ink-soft)" }}>
-                    Fibre-membrane reinforcement and UV-resistant acrylic waterproofing along vulnerable brick parapet tops.
-                  </p>
-                </div>
-
-                <div
-                  style={{
-                    background: "var(--white)",
-                    padding: "18px",
-                    borderRadius: "12px",
-                    border: "1px solid var(--line)",
-                  }}
-                >
-                  <span style={{ fontWeight: 700, color: "var(--amber)", fontSize: "12px" }}>
-                    SYSTEM 3
-                  </span>
-                  <h4 style={{ fontSize: "16px", margin: "6px 0" }}>Valley &amp; Flashing</h4>
-                  <p style={{ fontSize: "13px", color: "var(--ink-soft)" }}>
-                    Lead and galvanized counter-flashing around chimneys, skylights, and internal roof valleys.
-                  </p>
-                </div>
-
-                <div
-                  style={{
-                    background: "var(--white)",
-                    padding: "18px",
-                    borderRadius: "12px",
-                    border: "1px solid var(--line)",
-                  }}
-                >
-                  <span style={{ fontWeight: 700, color: "var(--amber)", fontSize: "12px" }}>
-                    SYSTEM 4
-                  </span>
-                  <h4 style={{ fontSize: "16px", margin: "6px 0" }}>Protective Roof Paint</h4>
-                  <p style={{ fontSize: "13px", color: "var(--ink-soft)" }}>
-                    High-build pure acrylic roof paints that seal micro-fissures in tiles and prevent rust on metal sheets.
-                  </p>
-                </div>
-              </div>
-            )}
+                <span>Request Quote for {current.tabLabel}</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ width: "15px", height: "15px" }}>
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </button>
+            </div>
           </div>
-          <p className="gaf-fine">
-            All materials sourced from certified South African manufacturers (Marley, Overland, Clotan &amp; Safintra).
-          </p>
+
+          {/* Card B: Installation Sequence Anatomy */}
+          <div className="tech-card tech-card-layers">
+            <span className="tech-card-tag">Craftsmanship Sequence</span>
+            <h3 className="tech-card-subtitle">3-Layer Installation Method</h3>
+
+            <div className="tech-layers-list">
+              {current.layers.map((layer, idx) => (
+                <div key={idx} className="tech-layer-item">
+                  <div className="tech-layer-step">{layer.step}</div>
+                  <div className="tech-layer-body">
+                    <h4 className="tech-layer-title">{layer.title}</h4>
+                    <p className="tech-layer-desc">{layer.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Card C: Client Advantage & Risk Prevention */}
+          <div className="tech-card tech-card-benefits">
+            <span className="tech-card-tag" style={{ color: "#22c55e", borderColor: "rgba(34, 197, 94, 0.3)" }}>
+              Quality Guarantee
+            </span>
+
+            <div className="tech-benefit-section">
+              <h4 className="tech-benefit-heading">{current.benefitHeadline}</h4>
+              <ul className="tech-benefit-list">
+                {current.benefitPoints.map((pt, pIdx) => (
+                  <li key={pIdx} className="tech-benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" className="tech-check-icon">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="tech-prevent-section">
+              <h4 className="tech-prevent-heading">{current.preventHeadline}</h4>
+              <ul className="tech-prevent-list">
+                {current.preventPoints.map((pt, pIdx) => (
+                  <li key={pIdx} className="tech-prevent-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" className="tech-cross-icon">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                    <span>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. Bottom Compliance Bar */}
+        <div className="tech-footer-strip">
+          <div className="tech-footer-info">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: "20px", height: "20px", color: "var(--amber-deep)" }}>
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+            </svg>
+            <span>
+              All specifications align with <strong>SANS 10400 Code of Practice</strong> for South African residential &amp; commercial buildings.
+            </span>
+          </div>
+
+          <button
+            type="button"
+            className="tech-footer-action"
+            onClick={onOpenBooking}
+          >
+            <span>Schedule On-Site Technical Assessment</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ width: "16px", height: "16px" }}>
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>

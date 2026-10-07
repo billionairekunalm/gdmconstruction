@@ -2463,122 +2463,458 @@ section {
   }
 }
 
-/* ---------- GAF Learning Center ---------- */
-.gaf {
-  background: var(--cream);
-}
-
-.gaf-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 26px;
-}
-
-.gaf-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-full);
-  padding: 12px 22px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  transition: var(--transition);
-}
-
-.gaf-tab svg {
-  width: 18px;
-  height: 18px;
-  color: var(--amber-deep);
-}
-
-.gaf-tab:hover {
-  border-color: var(--amber);
+/* ---------- SANS Technical Standards & Architecture (Executive Redesign) ---------- */
+.tech-section {
+  position: relative;
+  background: #f8fafc;
+  padding: 95px 0 100px;
   color: var(--ink);
-  transform: translateY(-2px);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-.gaf-tab.active {
-  background: var(--amber);
-  color: #ffffff;
-  border-color: var(--amber);
-  box-shadow: 0 10px 26px -8px rgba(47, 127, 224, 0.6);
-}
-
-.gaf-tab.active svg {
-  color: #ffffff;
-}
-
-.gaf-panel {
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  box-shadow: var(--shadow-md);
-}
-
-.gaf-caption {
-  font-size: 15px;
-  color: var(--ink-soft);
-  text-align: center;
-  padding: 6px 12px 20px;
-  max-width: 660px;
+.tech-container {
+  max-width: 1180px;
   margin: 0 auto;
 }
 
-.gaf-interactive-view {
-  background: var(--cream);
-  border-radius: var(--radius-md);
-  padding: 30px;
-  border: 1px solid var(--line);
-  min-height: 480px;
+.tech-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px;
 }
 
-.gaf-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 14px;
-}
-
-.gaf-table th, .gaf-table td {
-  padding: 14px 16px;
-  text-align: left;
-  border-bottom: 1px solid var(--line);
-  font-size: 14px;
-}
-
-.gaf-table th {
-  background: var(--white);
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.gaf-table tr:hover td {
-  background: rgba(255, 255, 255, 0.7);
-}
-
-.gaf-badge-rec {
-  background: var(--amber-soft);
+.tech-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.22);
+  font-size: 11.5px;
+  font-weight: 700;
   color: var(--amber-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 16px;
+}
+
+.tech-eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber-deep);
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.6);
+}
+
+.tech-title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.8vw, 42px);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.tech-title-accent {
+  display: inline;
+  color: var(--amber-deep);
+}
+
+.tech-subtitle {
+  font-size: clamp(14.5px, 1.8vw, 16px);
+  color: var(--ink-soft);
+  line-height: 1.65;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* 2. Interactive Segmented Tabs */
+.tech-tabs-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.tech-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(16, 27, 46, 0.04);
+}
+
+.tech-tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--amber-deep);
+}
+
+.tech-tab-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.tech-tab-btn:hover {
+  border-color: var(--amber);
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12);
+}
+
+.tech-tab-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.45);
+}
+
+.tech-tab-btn.active .tech-tab-icon {
+  color: #ffffff;
+}
+
+/* 3. Bento Breakdown Grid */
+.tech-bento-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.95fr 0.95fr;
+  gap: 22px;
+  margin-bottom: 34px;
+}
+
+.tech-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  padding: 28px 26px;
+  box-shadow: 0 10px 30px -8px rgba(16, 27, 46, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+}
+
+.tech-card:hover {
+  box-shadow: 0 16px 40px -10px rgba(16, 27, 46, 0.1);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.tech-card-tag {
+  display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
   text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--amber-deep);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  background: rgba(37, 99, 235, 0.06);
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  width: fit-content;
 }
 
-.gaf-fine {
-  text-align: center;
-  font-size: 12px;
+.tech-card-title {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.tech-card-desc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.tech-card-subtitle {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+/* Matrix in Card A */
+.tech-specs-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.tech-spec-box {
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.tech-spec-lbl {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--ink-mute);
-  margin-top: 16px;
-  letter-spacing: 0.02em;
+  margin-bottom: 3px;
+}
+
+.tech-spec-val {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.tech-spec-dtl {
+  display: block;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin-top: 3px;
+}
+
+.tech-card-action {
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.tech-action-quote-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+
+.tech-action-quote-btn:hover {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.45);
+}
+
+/* Layers in Card B */
+.tech-layers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tech-layer-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+}
+
+.tech-layer-step {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--amber-deep);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 4px 8px;
+  border-radius: 8px;
+  line-height: 1;
+}
+
+.tech-layer-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.tech-layer-desc {
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Benefits & Prevent in Card C */
+.tech-benefit-section {
+  margin-bottom: 18px;
+}
+
+.tech-benefit-heading {
+  font-size: 13px;
+  font-weight: 700;
+  color: #15803d;
+  margin-bottom: 10px;
+}
+
+.tech-benefit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tech-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.tech-check-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tech-prevent-section {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  margin-top: auto;
+}
+
+.tech-prevent-heading {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #b91c1c;
+  margin-bottom: 8px;
+}
+
+.tech-prevent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tech-prevent-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.tech-cross-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* 4. Bottom Footer Strip */
+.tech-footer-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 24px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 20px rgba(16, 27, 46, 0.04);
+  flex-wrap: wrap;
+}
+
+.tech-footer-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.tech-footer-info strong {
+  color: var(--ink);
+}
+
+.tech-footer-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--amber-deep);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tech-footer-action:hover {
+  background: var(--amber-deep);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+}
+
+@media (max-width: 992px) {
+  .tech-bento-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tech-section {
+    padding: 60px 0 70px;
+  }
+  .tech-tabs-bar {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tech-tab-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 10px 16px;
+    font-size: 12.5px;
+  }
+  .tech-footer-strip {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    padding: 18px;
+  }
+  .tech-footer-action {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* ---------- How It Works (Scroll-Linked Timeline) ---------- */
