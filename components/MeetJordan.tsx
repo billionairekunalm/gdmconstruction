@@ -263,69 +263,6 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
           <div className="jv-caption" style={{ marginTop: "14px" }}>
             🎥 <strong>Owner Introduction:</strong> The story, passion, and personal craftsmanship behind GDM Construction &amp; Roofing.
           </div>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              background: "linear-gradient(135deg, rgba(239, 246, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%)",
-              border: "1px solid rgba(59, 130, 246, 0.25)",
-              borderRadius: "16px",
-              padding: "16px 20px",
-              marginTop: "18px",
-              boxShadow: "0 4px 14px rgba(15, 23, 42, 0.04)",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <div
-                style={{
-                  width: "42px",
-                  height: "42px",
-                  borderRadius: "50%",
-                  background: "#2563eb",
-                  color: "#ffffff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "18px",
-                  boxShadow: "0 4px 12px rgba(37, 99, 235, 0.35)",
-                  flexShrink: 0,
-                }}
-              >
-                👷
-              </div>
-              <div>
-                <strong style={{ fontSize: "14px", color: "var(--ink)", display: "block" }}>
-                  Meet Our Full On-Site Team
-                </strong>
-                <span style={{ fontSize: "12px", color: "var(--ink-soft)" }}>
-                  5 Verified Specialists: Owner, PM, Safety, Engineer &amp; Builder
-                </span>
-              </div>
-            </div>
-            <a
-              href="#team"
-              style={{
-                fontSize: "12.5px",
-                fontWeight: 700,
-                color: "#2563eb",
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "5px",
-                whiteSpace: "nowrap",
-                padding: "8px 14px",
-                background: "#ffffff",
-                border: "1px solid rgba(59, 130, 246, 0.3)",
-                borderRadius: "999px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-              }}
-            >
-              <span>View Team</span>
-              <span>↓</span>
-            </a>
-          </div>
         </div>
 
         <div className="jordan-body">
