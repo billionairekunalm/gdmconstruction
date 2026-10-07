@@ -13,7 +13,6 @@ import { RecentWorkGallery } from "@/components/RecentWorkGallery";
 import { InstagramSection } from "@/components/InstagramSection";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { CtaBand } from "@/components/CtaBand";
-import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { EstimateModal } from "@/components/EstimateModal";
 import { BookingModal } from "@/components/BookingModal";
@@ -66,7 +65,6 @@ export default function Home() {
           onOpenBooking={() => setIsBookingOpen(true)}
           onOpenEstimate={() => setIsEstimateOpen(true)}
         />
-        <ContactSection onOpenBooking={() => setIsBookingOpen(true)} />
       </main>
       <Footer />
 

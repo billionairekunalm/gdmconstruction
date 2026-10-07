@@ -56,7 +56,7 @@ const TRUST_PILLARS = [
 
 export const CtaBand: React.FC<CtaBandProps> = ({ onOpenBooking }) => {
   return (
-    <section className="cta-band" aria-label="Built to Last Guarantee and Direct Consultation">
+    <section className="cta-band" id="contact" aria-label="Built to Last Guarantee and Direct Consultation">
       {/* Cinematic Backdrop with Depth Gradient */}
       <div className="cta-band-bg" aria-hidden="true">
         <img
