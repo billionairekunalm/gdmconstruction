@@ -78,7 +78,7 @@ export const GoogleReviews: React.FC = () => {
               </div>
               <div className="rv-stars">★★★★★</div>
               <p>
-                &ldquo;GDM replaced our aging roof with brand new Chromadek sheeting. Clayton and the team were punctual, respectful of our property, and completed the job on schedule. No leaks even during the recent heavy hailstorms!&rdquo;
+                &ldquo;GDM replaced our aging roof with brand new Chromadek sheeting. Gladmore and the team were punctual, respectful of our property, and completed the job on schedule. No leaks even during the recent heavy hailstorms!&rdquo;
               </p>
               <span className="rv-tag">New Roof Installation · Bedfordview</span>
             </article>

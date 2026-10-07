@@ -163,7 +163,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                 <circle cx="12" cy="7" r="4" />
               </svg>
               <span>
-                <strong>Lead Evaluator:</strong> Clayton / GDM Senior Lead
+                <strong>Lead Evaluator:</strong> Gladmore / GDM Senior Lead
               </span>
             </div>
           </div>
@@ -300,7 +300,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                     <strong>Selected Service:</strong> {service}
                   </div>
                   <div style={{ marginBottom: "8px" }}>
-                    <strong>Assigned Team:</strong> Clayton &amp; GDM Construction Lead
+                    <strong>Assigned Team:</strong> Gladmore &amp; GDM Construction Lead
                   </div>
                   <div>
                     <strong>Contact:</strong> {name} ({phone})
