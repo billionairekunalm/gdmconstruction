@@ -446,7 +446,7 @@ body.scrolled .nav-inner {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 7px 18px;
+  padding: 7px 20px;
   border-radius: 999px;
   background: rgba(15, 23, 42, 0.72);
   backdrop-filter: blur(16px);
@@ -458,8 +458,35 @@ body.scrolled .nav-inner {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
   margin-bottom: 22px;
   letter-spacing: 0.02em;
-  flex-wrap: wrap;
   justify-content: center;
+}
+
+.hero-badge-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-badge-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-badge-sub-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-badge-icon {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.hero-badge-sub-sep {
+  opacity: 0.35;
+  font-size: 11px;
 }
 
 .hero-badge-dot {
@@ -469,6 +496,7 @@ body.scrolled .nav-inner {
   background-color: #22c55e;
   box-shadow: 0 0 10px #22c55e;
   animation: pulse-dot 2s infinite ease-in-out;
+  flex-shrink: 0;
 }
 
 @keyframes pulse-dot {
@@ -478,6 +506,7 @@ body.scrolled .nav-inner {
 
 .hero-badge-highlight {
   color: #fbbf24;
+  font-weight: 700;
 }
 
 .hero-badge-sep {
@@ -487,6 +516,7 @@ body.scrolled .nav-inner {
 
 .hero-badge-status {
   color: #60a5fa;
+  font-weight: 600;
 }
 
 /* 2. Main Title */
@@ -656,8 +686,68 @@ body.scrolled .nav-inner {
   flex-shrink: 0;
 }
 
-/* Mobile CTA Layout (Clean 100% Primary + 50/50 Secondary Grid) */
+/* Mobile CTA & Badge Layout */
 @media (max-width: 640px) {
+  /* Mobile Eyebrow Trust Badge */
+  .hero-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+    max-width: 95%;
+  }
+
+  .hero-badge-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-badge-sep {
+    display: none;
+  }
+
+  .hero-badge-meta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    width: 100%;
+    font-size: 11.5px;
+    color: #cbd5e1;
+  }
+
+  .hero-badge-sub-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+
+  .hero-badge-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .hero-badge-sub-sep {
+    opacity: 0.35;
+    font-size: 11px;
+  }
+
   .hero-cta-group {
     display: flex;
     flex-direction: column;
@@ -717,6 +807,23 @@ body.scrolled .nav-inner {
 }
 
 @media (max-width: 350px) {
+  .hero-badge {
+    padding: 8px 12px;
+  }
+
+  .hero-badge-primary {
+    font-size: 11.5px;
+  }
+
+  .hero-badge-meta {
+    font-size: 10.5px;
+    gap: 6px;
+  }
+
+  .hero-badge-sub-item {
+    font-size: 10.5px;
+  }
+
   .hero-cta-secondary {
     grid-template-columns: 1fr;
     gap: 8px;
