@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="site-footer" aria-label="Site footer">
       <div className="wrap">
-        {/* Top Brand & Navigation Tier */}
+        {/* Top Brand Tier with Back-to-Top Button */}
         <div className="footer-top-tier">
           <div className="footer-brand-col">
             <a href="#top" className="footer-brand-logo" aria-label="Back to top">
@@ -24,17 +24,14 @@ export const Footer: React.FC = () => {
             </a>
           </div>
 
-          <nav className="footer-nav-links" aria-label="Footer navigation">
-            <a href="#services" className="footer-nav-link">Our Services</a>
-            <a href="#projects" className="footer-nav-link">Recent Work</a>
-            <a href="/technical-standards" className="footer-nav-link">SANS 10400 Standards</a>
+          <div className="footer-top-action">
             <a href="#top" className="footer-back-top" aria-label="Scroll back to top">
               <span>Back to Top</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: "13px", height: "13px" }}>
                 <polyline points="18 15 12 9 6 15" />
               </svg>
             </a>
-          </nav>
+          </div>
         </div>
 
         {/* Middle Trust & Compliance Metadata Strip */}
