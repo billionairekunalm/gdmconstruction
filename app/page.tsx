@@ -59,7 +59,7 @@ export default function Home() {
         <Services onOpenBooking={() => setIsBookingOpen(true)} />
         <Craft onOpenBooking={() => setIsBookingOpen(true)} />
         <GafLearningCenter onOpenBooking={() => setIsBookingOpen(true)} />
-        <ProcessTimeline />
+        <ProcessTimeline onOpenBooking={() => setIsBookingOpen(true)} />
         <RecentWorkGallery />
         <InstagramSection />
         <GoogleReviews />
