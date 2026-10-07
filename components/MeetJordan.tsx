@@ -279,11 +279,6 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
           </p>
 
 
-          <div className="jordan-sig">
-            <div className="jordan-sig-name">— The GDM Team</div>
-            <div className="jordan-sig-role">GDM Construction &amp; Roofing (Pty) Ltd</div>
-          </div>
-
           <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "24px" }}>
             <button type="button" className="btn btn-amber open-booking" onClick={onOpenBooking}>
               Request Site Inspection
