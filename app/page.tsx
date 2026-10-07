@@ -7,7 +7,6 @@ import { MeetJordan } from "@/components/MeetJordan";
 import { TeamSection } from "@/components/TeamSection";
 import { Services } from "@/components/Services";
 import { Craft } from "@/components/Craft";
-import { GafLearningCenter } from "@/components/GafLearningCenter";
 import { ProcessTimeline } from "@/components/ProcessTimeline";
 import { RecentWorkGallery } from "@/components/RecentWorkGallery";
 import { InstagramSection } from "@/components/InstagramSection";
@@ -57,8 +56,7 @@ export default function Home() {
         <MeetJordan onOpenBooking={() => setIsBookingOpen(true)} />
         <TeamSection onOpenBooking={() => setIsBookingOpen(true)} />
         <Services onOpenBooking={() => setIsBookingOpen(true)} />
-        <Craft />
-        <GafLearningCenter />
+        <Craft onOpenBooking={() => setIsBookingOpen(true)} />
         <ProcessTimeline />
         <RecentWorkGallery />
         <InstagramSection />
