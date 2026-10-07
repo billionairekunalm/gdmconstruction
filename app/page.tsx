@@ -61,7 +61,7 @@ export default function Home() {
         <TechnicalStandardsGateway onOpenBooking={() => setIsBookingOpen(true)} />
         <ProcessTimeline onOpenBooking={() => setIsBookingOpen(true)} />
         <RecentWorkGallery onOpenBooking={() => setIsBookingOpen(true)} />
-        <InstagramSection />
+        <InstagramSection onOpenBooking={() => setIsBookingOpen(true)} />
         <GoogleReviews />
         <CtaBand
           onOpenBooking={() => setIsBookingOpen(true)}
