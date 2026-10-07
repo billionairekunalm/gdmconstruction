@@ -41,31 +41,36 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenEstimate }) => 
       <div className="hero-veil"></div>
 
       <div className="hero-reveal">
-        {/* 1. Refined Eyebrow Badge */}
+        {/* 1. Refined Eyebrow Badge (Ultra-slim, non-intrusive) */}
         <div className="hero-badge">
           <div className="hero-badge-primary">
             <span className="hero-badge-dot" />
-            <span className="hero-badge-highlight">VAT Registered Contractor</span>
+            <span className="hero-badge-highlight">
+              <span className="badge-text-mobile">VAT Registered</span>
+              <span className="badge-text-desktop">VAT Registered Contractor</span>
+            </span>
           </div>
 
           <span className="hero-badge-sep">•</span>
 
           <div className="hero-badge-meta">
             <span className="hero-badge-sub-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="hero-badge-icon" style={{ width: "13px", height: "13px" }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="hero-badge-icon" style={{ width: "12px", height: "12px" }}>
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                 <circle cx="12" cy="10" r="3" />
               </svg>
-              <span>Johannesburg &amp; Gauteng</span>
+              <span className="badge-text-mobile">Johannesburg</span>
+              <span className="badge-text-desktop">Johannesburg &amp; Gauteng</span>
             </span>
 
-            <span className="hero-badge-sub-sep">·</span>
+            <span className="hero-badge-sub-sep">•</span>
 
             <span className="hero-badge-sub-item hero-badge-status">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="hero-badge-icon" style={{ width: "12px", height: "12px" }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="hero-badge-icon" style={{ width: "11px", height: "11px" }}>
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
               </svg>
-              <span>24/7 Rapid Response</span>
+              <span className="badge-text-mobile">24/7 Response</span>
+              <span className="badge-text-desktop">24/7 Rapid Response</span>
             </span>
           </div>
         </div>
