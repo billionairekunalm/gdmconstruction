@@ -722,18 +722,18 @@ body.scrolled .nav-inner {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 4px auto 14px;
+    margin: 4px auto 16px;
     width: 100%;
   }
 
   .hero-badge-logo-img {
     display: block;
-    width: min(215px, 58vw);
-    max-width: 225px;
+    width: min(265px, 75vw);
+    max-width: 275px;
     height: auto;
-    aspect-ratio: 640 / 440;
+    aspect-ratio: 666 / 494;
     object-fit: contain;
-    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.65));
   }
 
   /* Mobile Eyebrow Trust Badge */
