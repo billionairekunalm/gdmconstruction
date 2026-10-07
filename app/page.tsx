@@ -60,7 +60,7 @@ export default function Home() {
         <Craft onOpenBooking={() => setIsBookingOpen(true)} />
         <TechnicalStandardsGateway onOpenBooking={() => setIsBookingOpen(true)} />
         <ProcessTimeline onOpenBooking={() => setIsBookingOpen(true)} />
-        <RecentWorkGallery />
+        <RecentWorkGallery onOpenBooking={() => setIsBookingOpen(true)} />
         <InstagramSection />
         <GoogleReviews />
         <CtaBand
