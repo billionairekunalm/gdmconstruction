@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface CraftProps {
   onOpenBooking?: () => void;
@@ -8,14 +8,19 @@ interface CraftProps {
 
 type MaterialFilter = "all" | "tiles" | "metal" | "chromadek" | "waterproofing";
 
+interface HighlightItem {
+  icon: string;
+  title: string;
+  detail: string;
+}
+
 interface MaterialItem {
   id: string;
   category: MaterialFilter;
-  badge: string;
   brand: string;
   headline: string;
   description: string;
-  specs: string[];
+  highlights: HighlightItem[];
   durability: string;
   accentColor: string;
   iconBg: string;
@@ -24,38 +29,40 @@ interface MaterialItem {
 
 export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
   const [activeFilter, setActiveFilter] = useState<MaterialFilter>("all");
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
 
-  const TRUST_PILLARS = [
+  const TRUST_POINTS = [
     {
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="craft-pillar-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="craft-trust-icon">
           <path d="M12 2 4 5.5v6c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5v-6L12 2z" />
           <path d="m9 12 2 2 4-4.5" />
         </svg>
       ),
-      title: "100% SABS Approved",
-      subtitle: "Certified materials sourced directly from verified South African mills, compliant with SANS building codes."
+      label: "100% SABS Approved",
+      detail: "SANS Code Compliant"
     },
     {
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="craft-pillar-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="craft-trust-icon">
           <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
           <path d="m11 13-2 4h4l-2 4" />
         </svg>
       ),
-      title: "Highveld Weather Rated",
-      subtitle: "Engineered specifically to withstand Gauteng’s violent hailstorms, torrential downpours, and intense UV."
+      label: "Highveld Weather Rated",
+      detail: "Severe Hail & Storm Tested"
     },
     {
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="craft-pillar-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="craft-trust-icon">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
           <polyline points="14 2 14 8 20 8" />
           <path d="m9 15 2 2 4-4" />
         </svg>
       ),
-      title: "Factory Warranties",
-      subtitle: "Installed strictly to manufacturer guidelines, safeguarding your official product & workmanship guarantees."
+      label: "Factory Warranties",
+      detail: "Direct Mill Backing"
     }
   ];
 
@@ -63,17 +70,14 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
     {
       id: "marley",
       category: "tiles",
-      badge: "Tile Systems",
       brand: "Marley Roofing®",
-      headline: "Concrete & Clay Tiled Roofs",
-      description: "High-density interlocking tiles designed for Highveld summer downpours, hail protection, and superior thermal insulation.",
-      specs: [
-        "Double Roman & modern flat tile profiles",
-        "Severe hail impact resistance",
-        "Reinforced mortar bedding on ridges & hips",
-        "RadenShield under-tile thermal membrane"
+      headline: "Concrete & Clay Tiles",
+      description: "High-density interlocking tiles built to withstand severe Highveld hail with thermal under-tile protection.",
+      highlights: [
+        { icon: "🛡️", title: "Severe Hail Impact", detail: "Interlocking profile tested for violent storms" },
+        { icon: "🌡️", title: "RadenShield Barrier", detail: "Under-tile radiant heat insulation" }
       ],
-      durability: "30+ Year Expected Lifespan",
+      durability: "30+ Year Lifespan",
       accentColor: "#f59e0b",
       iconBg: "rgba(245, 158, 11, 0.16)",
       iconSvg: (
@@ -86,17 +90,14 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
     {
       id: "safintra",
       category: "metal",
-      badge: "Engineered Sheeting",
       brand: "Safintra® Steel",
-      headline: "Genuine IBR & Corrugated",
-      description: "Deep-flute inverted box rib sheeting offering superior water-discharge capacity for low to medium-pitch residential & commercial roofs.",
-      specs: [
-        "Certified 0.5mm – 0.58mm heavy-gauge steel",
-        "High load-bearing structural strength",
-        "Weatherproof EPDM neoprene sealing washers",
-        "Broad coverage with fewer end-laps"
+      headline: "IBR & Corrugated Metal",
+      description: "Heavy-gauge structural steel with deep flutes for rapid storm runoff on low and medium-pitch roofs.",
+      highlights: [
+        { icon: "🌊", title: "Rapid Flood Runoff", detail: "Deep-flute design handles peak rain volumes" },
+        { icon: "🔩", title: "0.58mm Heavy Steel", detail: "Weatherproof EPDM neoprene leak seals" }
       ],
-      durability: "High Load Structural Strength",
+      durability: "Heavy-Gauge SABS",
       accentColor: "#3b82f6",
       iconBg: "rgba(59, 130, 246, 0.16)",
       iconSvg: (
@@ -108,17 +109,14 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
     {
       id: "clotan",
       category: "chromadek",
-      badge: "Architectural Steel",
       brand: "Clotan Steel®",
-      headline: "Chromadek® Baked Enamel Coils",
-      description: "Factory-coated galvanized steel with baked-enamel color systems formulated to resist fading and chalking under intense African sun.",
-      specs: [
-        "Resistant to peeling, chalking & fading",
-        "Contemporary Charcoal, Slate & Traffic Green",
-        "Galvanized zinc anti-corrosion barrier",
-        "Full manufacturer warranty compliance"
+      headline: "Chromadek® Baked Enamel",
+      description: "Galvanized zinc steel coils with baked-enamel color coatings formulated to resist UV chalking and peeling.",
+      highlights: [
+        { icon: "☀️", title: "UV Anti-Fade Finish", detail: "Factory baked enamel withstands direct sun" },
+        { icon: "🛡️", title: "Zinc Anti-Corrosion", detail: "Heavy galvanized barrier prevents rust" }
       ],
-      durability: "UV & Fade Resistant Finish",
+      durability: "UV & Fade Resistant",
       accentColor: "#22c55e",
       iconBg: "rgba(34, 197, 94, 0.16)",
       iconSvg: (
@@ -138,17 +136,14 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
     {
       id: "overland",
       category: "waterproofing",
-      badge: "Protection Systems",
-      brand: "Overland® Waterproofing",
-      headline: "Industrial Torch-On & Acrylic",
-      description: "Heavy-duty 4mm heat-fused bitumen membranes and reinforced elastomeric systems ensuring 100% watertight protection on flat roofs & parapets.",
-      specs: [
-        "4mm heat-fused bitumen torch-on membrane",
-        "Fibre-membrane sealing for parapet walls",
-        "UV-reflective acrylic topcoat protection",
-        "Complete valley, flashing & gutter waterproofing"
+      brand: "Overland® Systems",
+      headline: "4mm Torch-On Bitumen",
+      description: "Heat-fused elastomeric bitumen membrane delivering 100% watertight protection on flat roofs & parapets.",
+      highlights: [
+        { icon: "💧", title: "Zero Water Ponding", detail: "4mm heat-fused impenetrable membrane" },
+        { icon: "🧱", title: "Parapet Wall Seal", detail: "Full fibre-reinforced flashing protection" }
       ],
-      durability: "100% Watertight Guarantee",
+      durability: "100% Watertight Seal",
       accentColor: "#a855f7",
       iconBg: "rgba(168, 85, 247, 0.16)",
       iconSvg: (
@@ -163,72 +158,100 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
     ? MATERIALS
     : MATERIALS.filter((m) => m.category === activeFilter);
 
+  // Sync scroll on mobile carousel
+  const handleCarouselScroll = () => {
+    if (!trackRef.current) return;
+    const { scrollLeft, clientWidth } = trackRef.current;
+    if (clientWidth === 0) return;
+    const cardWidth = clientWidth * 0.85;
+    const newIdx = Math.round(scrollLeft / cardWidth);
+    setActiveCardIndex(Math.min(Math.max(newIdx, 0), filteredMaterials.length - 1));
+  };
+
+  const scrollToCard = (idx: number) => {
+    if (!trackRef.current) return;
+    const cardWidth = trackRef.current.clientWidth * 0.85;
+    trackRef.current.scrollTo({
+      left: idx * cardWidth,
+      behavior: "smooth"
+    });
+    setActiveCardIndex(idx);
+  };
+
+  useEffect(() => {
+    setActiveCardIndex(0);
+    if (trackRef.current) {
+      trackRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+  }, [activeFilter]);
+
   return (
     <section className="craft-section" id="craft">
       <div className="craft-ambient-glow" />
 
       <div className="wrap craft-container">
-        {/* 1. Header Section */}
+        {/* 1. Header & Trust Ribbon */}
         <div className="craft-header">
           <div className="craft-eyebrow-pill">
             <span className="craft-eyebrow-dot" />
-            <span>SABS Certified Standards &amp; Materials</span>
+            <span>SABS Certified Materials &amp; Standards</span>
           </div>
 
           <h2 className="craft-title">
-            Built with Trusted South African Brands.
+            Built with South Africa’s Best.
             <span className="craft-title-highlight"> Engineered for the Highveld.</span>
           </h2>
 
           <p className="craft-subtitle">
-            From ferocious summer hailstorms to baking heat, a roof or renovation is only as resilient as the materials behind it. GDM partners exclusively with South Africa’s premier manufacturers to guarantee lasting structural integrity.
+            Direct mill-certified materials compliant with SANS building codes — engineered to endure Gauteng hail, sun, and torrential storms.
           </p>
+
+          {/* Compact Trust Ribbon (High Trust, Low Profile) */}
+          <div className="craft-trust-ribbon">
+            {TRUST_POINTS.map((pt, idx) => (
+              <React.Fragment key={idx}>
+                {idx > 0 && <div className="craft-trust-divider" />}
+                <div className="craft-trust-item">
+                  <div className="craft-trust-icon-box">{pt.icon}</div>
+                  <div className="craft-trust-text">
+                    <span className="craft-trust-lbl">{pt.label}</span>
+                    <span className="craft-trust-sub">{pt.detail}</span>
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
 
-        {/* 2. Three Core Trust Pillars (Scannable Cards) */}
-        <div className="craft-pillars-grid">
-          {TRUST_PILLARS.map((pillar, idx) => (
-            <div key={idx} className="craft-pillar-card">
-              <div className="craft-pillar-icon-box">
-                {pillar.icon}
-              </div>
-              <div className="craft-pillar-content">
-                <h3 className="craft-pillar-title">{pillar.title}</h3>
-                <p className="craft-pillar-text">{pillar.subtitle}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* 3. Interactive Category Filter Pills */}
+        {/* 2. Streamlined Filter Pills */}
         <div className="craft-filter-bar">
           <button
             type="button"
             className={`craft-filter-btn ${activeFilter === "all" ? "active" : ""}`}
             onClick={() => setActiveFilter("all")}
           >
-            All Materials ({MATERIALS.length})
+            All Systems (4)
           </button>
           <button
             type="button"
             className={`craft-filter-btn ${activeFilter === "tiles" ? "active" : ""}`}
             onClick={() => setActiveFilter("tiles")}
           >
-            Roof Tiles (Marley)
+            Tiles (Marley)
           </button>
           <button
             type="button"
             className={`craft-filter-btn ${activeFilter === "metal" ? "active" : ""}`}
             onClick={() => setActiveFilter("metal")}
           >
-            IBR Sheeting (Safintra)
+            IBR Metal (Safintra)
           </button>
           <button
             type="button"
             className={`craft-filter-btn ${activeFilter === "chromadek" ? "active" : ""}`}
             onClick={() => setActiveFilter("chromadek")}
           >
-            Chromadek® Steel
+            Chromadek® (Clotan)
           </button>
           <button
             type="button"
@@ -239,8 +262,19 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
           </button>
         </div>
 
-        {/* 4. Sleek Material Cards Grid */}
-        <div className="craft-materials-grid">
+        {/* Mobile Swipe Hint */}
+        {activeFilter === "all" && (
+          <div className="craft-mobile-swipe-hint">
+            <span>← Swipe to explore certified systems →</span>
+          </div>
+        )}
+
+        {/* 3. Materials Track (Horizontal Carousel on Mobile, Balanced Grid on Desktop) */}
+        <div
+          className="craft-materials-track"
+          ref={trackRef}
+          onScroll={handleCarouselScroll}
+        >
           {filteredMaterials.map((item) => (
             <div key={item.id} className="craft-material-card">
               <div className="craft-card-top">
@@ -250,43 +284,28 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
                 >
                   {item.iconSvg}
                 </div>
-                <div className="craft-card-badges">
-                  <span
-                    className="craft-card-category-badge"
-                    style={{ borderColor: item.accentColor, color: item.accentColor }}
-                  >
-                    {item.badge}
-                  </span>
-                  <span className="craft-card-durability-badge">
-                    {item.durability}
-                  </span>
-                </div>
+                <span className="craft-card-durability-badge">
+                  {item.durability}
+                </span>
               </div>
 
               <div className="craft-card-body">
-                <div className="craft-card-brand">{item.brand}</div>
+                <span className="craft-card-brand">{item.brand}</span>
                 <h3 className="craft-card-headline">{item.headline}</h3>
                 <p className="craft-card-description">{item.description}</p>
 
-                <div className="craft-card-specs-title">Engineered Specifications:</div>
-                <ul className="craft-card-specs-list">
-                  {item.specs.map((spec, sIdx) => (
-                    <li key={sIdx} className="craft-card-spec-item">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke={item.accentColor}
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="craft-spec-check"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                      <span>{spec}</span>
-                    </li>
+                {/* 2 Essential Highlights (Scannable, No Clutter) */}
+                <div className="craft-card-highlights">
+                  {item.highlights.map((hl, hIdx) => (
+                    <div key={hIdx} className="craft-highlight-item">
+                      <span className="craft-highlight-icon">{hl.icon}</span>
+                      <div className="craft-highlight-info">
+                        <span className="craft-highlight-title">{hl.title}</span>
+                        <span className="craft-highlight-detail">{hl.detail}</span>
+                      </div>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
               <div className="craft-card-footer">
@@ -295,15 +314,15 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
                   className="craft-card-action-btn"
                   onClick={onOpenBooking}
                 >
-                  <span>Request Quote for {item.brand.replace("®", "")}</span>
+                  <span>Request Quote for {item.brand.replace("®", "").replace(" Systems", "").replace(" Steel", "")}</span>
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="2.2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ width: "16px", height: "16px" }}
+                    className="craft-btn-arrow"
                   >
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <polyline points="12 5 19 12 12 19" />
@@ -314,17 +333,32 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
           ))}
         </div>
 
-        {/* 5. Bottom Assurance Banner */}
+        {/* Mobile Pagination Dots */}
+        {activeFilter === "all" && (
+          <div className="craft-mobile-dots" aria-hidden="true">
+            {filteredMaterials.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                type="button"
+                className={`craft-dot ${dotIdx === activeCardIndex ? "active" : ""}`}
+                onClick={() => scrollToCard(dotIdx)}
+                aria-label={`View slide ${dotIdx + 1}`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* 4. Streamlined Bottom Assurance Banner */}
         <div className="craft-assurance-banner">
           <div className="craft-assurance-left">
             <div className="craft-assurance-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: "18px", height: "18px", color: "#22c55e" }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ width: "17px", height: "17px", color: "#22c55e" }}>
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
-              <span>VAT Registered Contractor (Pty) Ltd</span>
+              <span>SANS 10400 Code Compliant • VAT Registered (Pty) Ltd</span>
             </div>
             <p className="craft-assurance-text">
-              All quotes are 100% transparent with SANS building compliance. We also assist clients with detailed repair assessments and photo reports for insurance damage claims.
+              Zero shortcuts. Every quote includes verified SABS materials and insurance photo assessments.
             </p>
           </div>
 
@@ -334,8 +368,8 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
               className="craft-banner-btn-primary"
               onClick={onOpenBooking}
             >
-              <span>Consult on Materials &amp; Pricing</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ width: "16px", height: "16px" }}>
+              <span>Consult on Materials</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ width: "15px", height: "15px" }}>
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
               </svg>
@@ -346,7 +380,7 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
               rel="noopener noreferrer"
               className="craft-banner-btn-secondary"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: "16px", height: "16px", color: "#22c55e" }}>
+              <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: "15px", height: "15px", color: "#22c55e" }}>
                 <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z" />
               </svg>
               <span>WhatsApp Questions</span>
