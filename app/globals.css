@@ -5785,51 +5785,314 @@ section {
   transform: translate(2px, -2px);
 }
 
-/* ---------- CTA Band ---------- */
+/* ---------- CTA Band (Built to Last · Delivered with Integrity) ---------- */
 .cta-band {
   position: relative;
-  padding: 130px 0;
-  background: var(--dark);
+  padding: clamp(68px, 7.5vw, 96px) 0;
+  background: #080f1d;
   overflow: hidden;
   text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .cta-band-bg {
   position: absolute;
   inset: 0;
+  pointer-events: none;
 }
 
-.cta-band-bg img {
+.cta-band-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.35;
+  opacity: 0.24;
+  filter: saturate(1.15);
 }
 
-.cta-band::after {
-  content: '';
+.cta-band-gradient-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(12, 26, 46, 0.65), rgba(12, 26, 46, 0.85));
+  background: radial-gradient(
+    ellipse at 50% 20%,
+    rgba(30, 58, 138, 0.35) 0%,
+    rgba(11, 20, 36, 0.92) 55%,
+    rgba(6, 12, 22, 0.98) 100%
+  );
 }
 
 .cta-band-inner {
   position: relative;
   z-index: 2;
-  max-width: 680px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 0 24px;
 }
 
-.cta-band h2 {
+.cta-eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+}
+
+.cta-eyebrow-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-headline {
   color: #ffffff;
+  font-size: clamp(27px, 3.8vw, 40px);
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  margin: 0 auto;
+  max-width: 720px;
 }
 
-.cta-band p {
-  margin: 18px auto 32px;
-  font-size: 17px;
-  color: rgba(255, 255, 255, 0.8);
-  max-width: 520px;
+.cta-subheading {
+  margin: 16px auto 32px;
+  font-size: clamp(14.5px, 1.8vw, 16px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 640px;
+}
+
+/* 4 Trust Guarantee Pillars Grid */
+.cta-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 880px;
+  margin: 0 auto 36px;
+}
+
+.cta-trust-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 16px 14px;
+  text-align: left;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cta-trust-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.cta-trust-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cta-trust-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-trust-icon-box svg {
+  width: 17px;
+  height: 17px;
+}
+
+.cta-trust-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.cta-trust-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  margin-bottom: 3px;
+}
+
+.cta-trust-desc {
+  font-size: 11.5px;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+/* Action Buttons Cluster */
+.cta-actions-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.cta-booking-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  font-size: 14.5px;
+  font-weight: 700;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cta-booking-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+}
+
+.cta-arrow-slide {
+  transition: transform 0.25s ease;
+}
+
+.cta-booking-btn:hover .cta-arrow-slide {
+  transform: translateX(4px);
+}
+
+.cta-whatsapp-btn {
+  border-color: rgba(37, 211, 102, 0.5);
+  background: rgba(37, 211, 102, 0.08);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 24px;
+  font-size: 14.5px;
+  font-weight: 700;
+  transition: all 0.25s ease;
+}
+
+.cta-whatsapp-btn:hover {
+  background: rgba(37, 211, 102, 0.2);
+  border-color: #25d366;
+  color: #25d366;
+  transform: translateY(-2px);
+}
+
+.cta-online-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #25d366;
+  box-shadow: 0 0 8px #25d366;
+  animation: ctaDotPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes ctaDotPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+/* Micro-Proof Footer Banner */
+.cta-trust-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  color: #cbd5e1;
+}
+
+.cta-metric-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cta-metric-sep {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.cta-star-row {
+  letter-spacing: -1px;
+  font-size: 11px;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 860px) {
+  .cta-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+}
+
+@media (max-width: 580px) {
+  .cta-band {
+    padding: 56px 0;
+  }
+
+  .cta-trust-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .cta-trust-card {
+    padding: 12px 10px;
+  }
+
+  .cta-trust-title {
+    font-size: 12.5px;
+  }
+
+  .cta-trust-desc {
+    font-size: 10.5px;
+  }
+
+  .cta-actions-cluster {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .cta-booking-btn,
+  .cta-whatsapp-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cta-trust-metrics {
+    font-size: 11.5px;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cta-metric-sep {
+    display: none;
+  }
 }
 
 /* ---------- Flexible Financing (Hearth) ---------- */
