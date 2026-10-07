@@ -56,7 +56,7 @@ export default function Home() {
         />
         <MeetJordan onOpenBooking={() => setIsBookingOpen(true)} />
         <TeamSection onOpenBooking={() => setIsBookingOpen(true)} />
-        <Services />
+        <Services onOpenBooking={() => setIsBookingOpen(true)} />
         <Craft />
         <GafLearningCenter />
         <ProcessTimeline />
