@@ -10,7 +10,6 @@ import { Craft } from "@/components/Craft";
 import { TechnicalStandardsGateway } from "@/components/TechnicalStandardsGateway";
 import { ProcessTimeline } from "@/components/ProcessTimeline";
 import { RecentWorkGallery } from "@/components/RecentWorkGallery";
-import { InstagramSection } from "@/components/InstagramSection";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { CtaBand } from "@/components/CtaBand";
 import { Footer } from "@/components/Footer";
@@ -59,7 +58,6 @@ export default function Home() {
         <TechnicalStandardsGateway onOpenBooking={() => setIsBookingOpen(true)} />
         <ProcessTimeline onOpenBooking={() => setIsBookingOpen(true)} />
         <RecentWorkGallery onOpenBooking={() => setIsBookingOpen(true)} />
-        <InstagramSection onOpenBooking={() => setIsBookingOpen(true)} />
         <GoogleReviews />
         <CtaBand
           onOpenBooking={() => setIsBookingOpen(true)}

@@ -27,7 +27,6 @@ export const Footer: React.FC = () => {
           <nav className="footer-nav-links" aria-label="Footer navigation">
             <a href="#services" className="footer-nav-link">Our Services</a>
             <a href="#projects" className="footer-nav-link">Recent Work</a>
-            <a href="#follow" className="footer-nav-link">Site Reels</a>
             <a href="/technical-standards" className="footer-nav-link">SANS 10400 Standards</a>
             <a href="#top" className="footer-back-top" aria-label="Scroll back to top">
               <span>Back to Top</span>
