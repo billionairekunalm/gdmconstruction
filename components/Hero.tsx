@@ -86,8 +86,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenEstimate }) => 
               src="/images/gdm-badge-mobile-hq.png"
               alt="GDM Construction &amp; Roofing (Pty) Ltd Logo"
               className="hero-badge-logo-img"
-              width={268}
-              height={199}
+              width={260}
+              height={179}
             />
           </div>
         </div>
