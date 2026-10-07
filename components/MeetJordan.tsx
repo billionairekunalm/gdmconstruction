@@ -278,32 +278,6 @@ export const MeetJordan: React.FC<MeetJordanProps> = ({ onOpenBooking }) => {
             Today, GDM operates as a full-service general building and renovation contractor across Johannesburg. Whether you need a brand-new roof, Rhinolite skimmed ceilings, a kitchen revamp, or emergency leak repairs, our team gives every job the exact same care and meticulous attention.
           </p>
 
-          <ul className="jordan-free">
-            <li>
-              <span className="tick">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                  <path d="M20 6 9 17l-5-5" />
-                </svg>
-              </span>
-              <b>Free site inspections &amp; quotes</b> within our main service areas
-            </li>
-            <li>
-              <span className="tick">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                  <path d="M20 6 9 17l-5-5" />
-                </svg>
-              </span>
-              <b>VAT Registered &amp; fully compliant contractor</b>
-            </li>
-            <li>
-              <span className="tick">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                  <path d="M20 6 9 17l-5-5" />
-                </svg>
-              </span>
-              <b>24/7 emergency storm damage &amp; leak call-outs</b>
-            </li>
-          </ul>
 
           <div className="jordan-sig">
             <div className="jordan-sig-name">— The GDM Team</div>
