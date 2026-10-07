@@ -70,12 +70,27 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenEstimate }) => 
           </div>
         </div>
 
-        {/* 2. Bold, Grand Brand Title */}
-        <h1 className="hero-title">
-          GDM CONSTRUCTION{" "}
-          <span className="hero-title-accent">&amp; ROOFING</span>
-          <span className="hero-title-sub">(PTY) LTD</span>
-        </h1>
+        {/* 2. Bold, Grand Brand Title / Mobile Oval Logo Badge */}
+        <div className="hero-brand-block">
+          {/* Desktop Title */}
+          <h1 className="hero-title desktop-only-title">
+            GDM CONSTRUCTION{" "}
+            <span className="hero-title-accent">&amp; ROOFING</span>
+            <span className="hero-title-sub">(PTY) LTD</span>
+          </h1>
+
+          {/* Mobile Big Oval Logo Badge (Client Requested) */}
+          <div className="hero-mobile-logo-badge">
+            <h1 className="sr-only">GDM Construction &amp; Roofing (Pty) Ltd</h1>
+            <img
+              src="/images/gdm-badge-mobile-hq.png"
+              alt="GDM Construction &amp; Roofing (Pty) Ltd Logo"
+              className="hero-badge-logo-img"
+              width={310}
+              height={170}
+            />
+          </div>
+        </div>
 
         {/* 3. Core Specialization Tagline */}
         <p className="hero-tagline">
@@ -87,7 +102,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenEstimate }) => 
           Johannesburg’s trusted partner for new IBR &amp; tile roof installations, flawless Rhinolite ceilings, expert painting, and master-crafted residential &amp; commercial renovations.
         </p>
 
-        {/* 5. Streamlined Dual Call-to-Actions */}
         {/* 5. Streamlined Dual Call-to-Actions */}
         <div className="hero-cta-group">
           <button
