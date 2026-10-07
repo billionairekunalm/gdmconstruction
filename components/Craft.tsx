@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 
 interface CraftProps {
   onOpenBooking?: () => void;
@@ -363,6 +364,12 @@ export const Craft: React.FC<CraftProps> = ({ onOpenBooking }) => {
           </div>
 
           <div className="craft-assurance-actions">
+            <Link
+              href="/technical-standards"
+              className="craft-banner-btn-standards"
+            >
+              <span>SANS 10400 Architecture &amp; Sequences →</span>
+            </Link>
             <button
               type="button"
               className="craft-banner-btn-primary"
