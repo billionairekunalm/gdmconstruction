@@ -15,11 +15,11 @@ interface ServiceOption {
 }
 
 const SERVICE_OPTIONS: ServiceOption[] = [
-  { id: "new-roof", label: "New Roof Installation (IBR / Chromadek / Tile)", shortLabel: "New Roof Installation", icon: "🔨" },
+  { id: "new-roof", label: "New Roof Installation (IBR / Chromadek / Tile)", shortLabel: "New Roof", icon: "🔨" },
   { id: "ceilings", label: "Ceilings & Rhinolite Skimming", shortLabel: "Rhinolite Ceilings", icon: "🏠" },
-  { id: "repairs", label: "Roof Repairs & Leak Detection", shortLabel: "Leak & Storm Repair", icon: "⚡" },
+  { id: "repairs", label: "Roof Repairs & Leak Detection", shortLabel: "Leak Repair", icon: "⚡" },
   { id: "waterproofing", label: "Waterproofing Systems (Parapets / Flat Slabs)", shortLabel: "Waterproofing", icon: "💧" },
-  { id: "painting", label: "Roof Painting & Protective Wall Coatings", shortLabel: "Painting & Coatings", icon: "🎨" },
+  { id: "painting", label: "Roof Painting & Protective Wall Coatings", shortLabel: "Roof Painting", icon: "🎨" },
   { id: "renovations", label: "Complete Home & Turnkey Renovation", shortLabel: "Home Renovation", icon: "🏗️" },
   { id: "re-roofing", label: "Re-Roofing & Sheeting Replacement", shortLabel: "Full Re-Roofing", icon: "🔄" },
   { id: "gutters", label: "Gutters, Fascias & Bargeboards", shortLabel: "Gutters & Fascias", icon: "🌧️" },
@@ -44,7 +44,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
   const [selectedService, setSelectedService] = useState<string>("New Roof Installation (IBR / Chromadek / Tile)");
 
   const [name, setName] = useState<string>("");
-  const [phone, setPhone] = useState<string>("+27 ");
+  const [phone, setPhone] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [isUrgent, setIsUrgent] = useState<boolean>(false);
@@ -95,8 +95,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
     if (isOpen) {
       setIsConfirmed(false);
       document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     } else {
       document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -111,6 +113,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
 
     return () => {
       document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
@@ -118,11 +121,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
   if (!isOpen) return null;
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value;
-    if (!val.startsWith("+27")) {
-      val = "+27 " + val.replace(/^\+?2?7?\s*/, "");
-    }
-    setPhone(val);
+    setPhone(e.target.value);
   };
 
   const handleScrollDates = (direction: "left" | "right") => {
@@ -134,7 +133,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
     });
   };
 
+  const getFormattedPhone = () => {
+    let clean = phone.trim();
+    if (clean.startsWith("+27")) return clean;
+    if (clean.startsWith("0")) return "+27 " + clean.substring(1);
+    if (clean.startsWith("+")) return clean;
+    if (clean) return "+27 " + clean;
+    return "+27 83 366 2700";
+  };
+
   const buildWhatsAppUrl = (refCode: string) => {
+    const formatted = getFormattedPhone();
     const text = `Hello Gladmore, I just scheduled a Free Site Inspection on your website:
 
 📋 *Booking Ref:* ${refCode}
@@ -142,7 +151,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
 🔨 *Service:* ${selectedService}
 📍 *Property Address:* ${address}
 👤 *Name:* ${name}
-📞 *Phone:* ${phone}
+📞 *Phone:* ${formatted}
 ${isUrgent ? '🚨 *URGENCY:* Active Leak / Storm Damage (Priority Dispatch Requested)\n' : ''}${notes ? `📝 *Notes:* ${notes}\n` : ''}
 Please confirm my appointment. Thank you!`;
 
@@ -256,12 +265,13 @@ END:VCALENDAR`;
           <div className="booking-head-content">
             <div className="booking-head-eyebrow">
               <span className="booking-eyebrow-dot" />
-              <span>Zero Call-Out Fee · SANS 10400 Certified · 24/7 Response</span>
+              <span className="desktop-only">Zero Call-Out Fee · SANS 10400 Certified · 24/7 Response</span>
+              <span className="mobile-only">Zero Call-Out Fee · 24/7 Response</span>
             </div>
             <h4 id="bookingModalTitle" className="booking-head-title">
               Schedule Free Site Inspection
             </h4>
-            <span className="booking-head-desc">
+            <span className="booking-head-desc desktop-only">
               Choose your preferred date &amp; time for an on-site roof or renovation evaluation
             </span>
           </div>
@@ -641,15 +651,30 @@ END:VCALENDAR`;
                         </svg>
                         <span>WhatsApp / Mobile Number</span>
                       </label>
-                      <input
-                        type="tel"
-                        id="bookPhone"
-                        className="booking-input"
-                        placeholder="+27 83 366 2700"
-                        required
-                        value={phone}
-                        onChange={handlePhoneChange}
-                      />
+                      <div className="booking-phone-input-wrap">
+                        <span className="booking-phone-prefix" title="South Africa (+27)">
+                          <svg viewBox="0 0 900 600" style={{ width: "18px", height: "12px", borderRadius: "2px", flexShrink: 0, marginRight: "5px" }} aria-hidden="true">
+                            <path fill="#007749" d="M0 0h900v600H0z"/>
+                            <path fill="#ffffff" d="M0 0h300L600 300 300 600H0z"/>
+                            <path fill="#ffb81c" d="M0 75h225L450 300 225 525H0z"/>
+                            <path fill="#000000" d="M0 120h180L360 300 180 480H0z"/>
+                            <path fill="#ffffff" d="M300 0h600v180H300zM300 420h600v180H300z"/>
+                            <path fill="#e03c31" d="M360 0h540v120H360z"/>
+                            <path fill="#001489" d="M360 480h540v120H360z"/>
+                          </svg>
+                          <span>+27</span>
+                        </span>
+                        <input
+                          type="tel"
+                          id="bookPhone"
+                          className="booking-input booking-input-phone"
+                          placeholder="83 366 2700 / 083 366 2700"
+                          required
+                          value={phone}
+                          onChange={handlePhoneChange}
+                          inputMode="tel"
+                        />
+                      </div>
                     </div>
 
                     {/* Address */}
@@ -681,11 +706,11 @@ END:VCALENDAR`;
                         </svg>
                         <span>Brief Notes or Roof Condition (Optional)</span>
                       </label>
-                      <input
-                        type="text"
+                      <textarea
                         id="bookNotes"
-                        className="booking-input"
+                        className="booking-input booking-textarea"
                         placeholder="e.g. Sagging Rhinolite ceiling, storm hail damage, leak over kitchen, new home"
+                        rows={2}
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
                       />

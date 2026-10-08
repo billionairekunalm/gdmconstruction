@@ -21,8 +21,10 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({ isOpen, onClose })
       setStep(1);
       setIsSubmitted(false);
       document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     } else {
       document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -37,6 +39,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({ isOpen, onClose })
 
     return () => {
       document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);

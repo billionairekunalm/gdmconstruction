@@ -22,6 +22,12 @@ export default function Home() {
   const [isEstimateOpen, setIsEstimateOpen] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.location.search.includes("booking=true")) {
+      setIsBookingOpen(true);
+    }
+  }, []);
+
+  useEffect(() => {
     // Scroll reveal observer for elements with .reveal
     const observer = new IntersectionObserver(
       (entries) => {
