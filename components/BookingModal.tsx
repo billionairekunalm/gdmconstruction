@@ -423,8 +423,10 @@ END:VCALENDAR`;
                 {/* 1. Pick Service */}
                 <div className="booking-step-block">
                   <div className="booking-step-header">
-                    <span className="booking-step-badge">1</span>
-                    <h5 className="booking-step-title">Select Service Needed</h5>
+                    <div className="booking-step-title-wrap">
+                      <span className="booking-step-badge">1</span>
+                      <h5 className="booking-step-title">Select Service Needed</h5>
+                    </div>
                   </div>
 
                   {/* Quick-tap service pills */}
@@ -473,10 +475,10 @@ END:VCALENDAR`;
                 {/* 2. Choose Inspection Date */}
                 <div className="booking-step-block">
                   <div className="booking-step-header">
-                    <span className="booking-step-badge">2</span>
-                    <div className="booking-step-title-row">
+                    <div className="booking-step-title-wrap">
+                      <span className="booking-step-badge">2</span>
                       <h5 className="booking-step-title">Choose Preferred Date</h5>
-                      <span className="booking-step-note">Mon–Sat inspections available</span>
+                      <span className="booking-step-note">Mon–Sat available</span>
                     </div>
 
                     <div className="booking-dates-arrows desktop-only">
@@ -515,11 +517,13 @@ END:VCALENDAR`;
                           tabIndex={0}
                           aria-pressed={isSelected}
                         >
-                          {d.relative ? (
-                            <span className="date-relative-tag">{d.relative}</span>
-                          ) : (
-                            <span className="date-day-name">{d.dayName}</span>
-                          )}
+                          <div className="date-pill-top">
+                            {d.relative ? (
+                              <span className="date-relative-tag">{d.relative}</span>
+                            ) : (
+                              <span className="date-day-name">{d.dayName}</span>
+                            )}
+                          </div>
                           <span className="date-day-num">{d.dayNum}</span>
                           <span className="date-month-name">{d.monthName}</span>
                         </div>
@@ -531,10 +535,10 @@ END:VCALENDAR`;
                 {/* 3. Choose Time Slot */}
                 <div className="booking-step-block">
                   <div className="booking-step-header">
-                    <span className="booking-step-badge">3</span>
-                    <div className="booking-step-title-row">
+                    <div className="booking-step-title-wrap">
+                      <span className="booking-step-badge">3</span>
                       <h5 className="booking-step-title">Choose Open Time Window</h5>
-                      <span className="booking-step-note">30–45 min on-site inspection</span>
+                      <span className="booking-step-note">30–45 min on-site</span>
                     </div>
 
                     {/* Morning / Afternoon Filter Tabs */}
@@ -586,8 +590,10 @@ END:VCALENDAR`;
                 {/* 4. Contact & Property Details */}
                 <div className="booking-step-block">
                   <div className="booking-step-header">
-                    <span className="booking-step-badge">4</span>
-                    <h5 className="booking-step-title">Your Contact &amp; Property Details</h5>
+                    <div className="booking-step-title-wrap">
+                      <span className="booking-step-badge">4</span>
+                      <h5 className="booking-step-title">Your Contact &amp; Property Details</h5>
+                    </div>
                   </div>
 
                   <div className="booking-form-fields-grid">
