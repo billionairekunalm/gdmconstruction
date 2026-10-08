@@ -56,10 +56,34 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({ isOpen, onClose })
   const handleSubmit = () => {
     if (address.trim().length >= 3) {
       setIsSubmitting(true);
+
+      const msg = `Hello Gladmore, I just submitted a Project Estimate Request on your website:
+
+🔨 *Service:* ${service || "General Roofing & Renovation"}
+👤 *Name:* ${name}
+📞 *Phone:* ${phone}
+📍 *Property Location:* ${address}
+
+Please provide an estimate and confirm next steps. Thank you!`;
+
+      const waUrl = `https://wa.me/27833662700?text=${encodeURIComponent(msg)}`;
+
+      // Synchronously open WhatsApp directly to Gladmore
+      if (typeof window !== "undefined") {
+        try {
+          const waWindow = window.open(waUrl, "_blank");
+          if (!waWindow || waWindow.closed || typeof waWindow.closed === "undefined") {
+            window.location.href = waUrl;
+          }
+        } catch {
+          window.location.href = waUrl;
+        }
+      }
+
       setTimeout(() => {
         setIsSubmitting(false);
         setIsSubmitted(true);
-      }, 600);
+      }, 500);
     }
   };
 
