@@ -24,10 +24,22 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({ isOpen, onClose })
     } else {
       document.body.style.overflow = "";
     }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -99,8 +111,14 @@ Please provide an estimate and confirm next steps. Thank you!`;
     >
       <div className="est-backdrop" onClick={onClose}></div>
       <div className="est-card">
-        <button className="est-close" aria-label="Close modal" onClick={onClose} type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <button
+          className="est-close"
+          aria-label="Close modal and return to website"
+          onClick={onClose}
+          type="button"
+          title="Close and return to website"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8">
             <path d="M18 6 6 18M6 6l12 12" />
           </svg>
         </button>
@@ -199,6 +217,16 @@ Please provide an estimate and confirm next steps. Thank you!`;
                       </span>
                     </button>
                   ))}
+                </div>
+                <div className="est-actions" style={{ marginTop: "24px" }}>
+                  <button
+                    type="button"
+                    className="est-back"
+                    onClick={onClose}
+                    style={{ width: "100%", justifyContent: "center" }}
+                  >
+                    ✕ Cancel &amp; Return to Website
+                  </button>
                 </div>
               </div>
             )}
@@ -347,6 +375,16 @@ Please provide an estimate and confirm next steps. Thank you!`;
             <p style={{ fontSize: "12.5px", color: "var(--ink-mute)", marginTop: "14px" }}>
               Or email: contact@gdmconstruction.co.za
             </p>
+            <div style={{ marginTop: "24px", display: "flex", justifyContent: "center" }}>
+              <button
+                type="button"
+                className="btn btn-line"
+                onClick={onClose}
+                style={{ width: "100%", justifyContent: "center" }}
+              >
+                ✕ Done &amp; Return to Website
+              </button>
+            </div>
           </div>
         )}
       </div>

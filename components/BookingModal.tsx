@@ -90,7 +90,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
     }
   }, []);
 
-  // Lock background scroll when modal is open
+  // Lock background scroll when modal is open and handle Escape key
   useEffect(() => {
     if (isOpen) {
       setIsConfirmed(false);
@@ -98,10 +98,22 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
     } else {
       document.body.style.overflow = "";
     }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -266,11 +278,12 @@ END:VCALENDAR`;
             <button
               className="booking-close-btn"
               id="bookingClose"
-              aria-label="Close modal"
+              aria-label="Close modal and return to website"
               type="button"
               onClick={onClose}
+              title="Close and go back to website"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8">
                 <path d="M18 6 6 18M6 6l12 12" />
               </svg>
             </button>
@@ -726,6 +739,18 @@ END:VCALENDAR`;
                         </svg>
                       </>
                     )}
+                  </button>
+
+                  <button
+                    type="button"
+                    className="booking-cancel-btn"
+                    onClick={onClose}
+                    aria-label="Cancel and go back to website"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: "16px", height: "16px" }}>
+                      <path d="M18 6 6 18M6 6l12 12" />
+                    </svg>
+                    <span>Cancel &amp; Go Back to Website</span>
                   </button>
 
                   <div className="submit-disclaimer">
