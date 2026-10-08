@@ -248,6 +248,9 @@ END:VCALENDAR`;
 
       {/* Main Modal Card */}
       <div className="booking-card">
+        {/* Mobile Native Drag Handle */}
+        <div className="booking-drag-handle" aria-hidden="true" />
+
         {/* Header Bar */}
         <div className="booking-card-head">
           <div className="booking-head-content">
